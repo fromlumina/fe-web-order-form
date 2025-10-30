@@ -2,15 +2,15 @@
 
 import DateTimePicker from "./DateTimePicker.vue";
 import {ref} from "vue";
+import PaymentMethodDialog from "./PaymentMethodDialog.vue";
 
+const paymentMethodDialogVisibility = ref<boolean>(false);
 
 const dateNow = ref<Date | undefined>(undefined)
 const timeNow = ref<any>(undefined)
 </script>
 
 <template>
-
-  <!-- Section -->
   <section
       class="grid sm:grid-cols-12 gap-2 sm:gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-neutral-700 dark:first:border-transparent">
     <div class="sm:col-span-12">
@@ -229,6 +229,7 @@ const timeNow = ref<any>(undefined)
       <button
           type="button"
           class="py-3 px-4 inline-flex justify-center text-nowrap items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-600 hover:border-blue-600 hover:text-blue-600 focus:outline-hidden focus:border-blue-600 focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-700 dark:text-neutral-400 dark:hover:text-blue-500 dark:hover:border-blue-600 dark:focus:text-blue-500 dark:focus:border-blue-600 w-full sm:w-auto"
+          @click="paymentMethodDialogVisibility = true"
       >
         Metode Pembayaran
       </button>
@@ -237,7 +238,8 @@ const timeNow = ref<any>(undefined)
     <!-- End Col -->
 
   </section>
-  <!-- End Section -->
+
+  <payment-method-dialog v-model="paymentMethodDialogVisibility"/>
 </template>
 
 <style scoped>

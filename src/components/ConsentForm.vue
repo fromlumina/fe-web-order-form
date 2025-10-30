@@ -1,5 +1,9 @@
 ﻿<script setup lang="ts">
 
+import {ref} from "vue";
+import TermAndConditionDialog from "./TermAndConditionDialog.vue";
+
+const termAndConditionVisibility = ref<boolean>(false)
 </script>
 
 <template>
@@ -36,13 +40,12 @@
 
       <p>
         Untuk informasi lebih lengkap, silakan baca
-        <a
-            href="/terms-and-conditions"
-            target="_blank"
-            class="text-blue-600 hover:underline font-medium"
-        >
+        <button type="button"
+                class="hover:underline py-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-hidden focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
+                @click="termAndConditionVisibility = true">
           Syarat & Ketentuan Lengkap
-        </a>.
+        </button>
+        .
       </p>
     </div>
 
@@ -66,6 +69,7 @@
       </label>
     </div>
   </section>
+  <term-and-condition-dialog v-model="termAndConditionVisibility"/>
 </template>
 
 <style scoped>
