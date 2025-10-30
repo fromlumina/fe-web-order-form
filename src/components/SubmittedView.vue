@@ -26,9 +26,9 @@
             WhatsApp
           </a>
           atau kirim email ke
-          <a href="mailto:halo@luminafoto.com"
+          <a href="mailto:cs@bylumina.id"
              class="text-green-700 dark:text-green-300 font-semibold hover:underline">
-            halo@luminafoto.com
+            cs@bylumina.id
           </a>.
         </p>
       </div>
