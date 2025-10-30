@@ -5,6 +5,7 @@ import {ref} from "vue";
 
 
 const dateNow = ref<Date | undefined>(undefined)
+const timeNow = ref<any>(undefined)
 </script>
 
 <template>
@@ -120,7 +121,7 @@ const dateNow = ref<Date | undefined>(undefined)
     <!-- End Col -->
 
     <div class="sm:col-span-9">
-      <date-time-picker v-model:date="dateNow" date-format="DD MMMM YYYY"
+      <date-time-picker v-model:date="dateNow" v-model:time="timeNow" date-format="DD MMMM YYYY"
       />
 
     </div>
