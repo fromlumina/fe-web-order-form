@@ -16,7 +16,7 @@ const termAndConditionVisibility = ref<boolean>(false)
 
     <div class="mt-4 text-sm text-gray-600 dark:text-neutral-400 space-y-3 leading-relaxed">
       <p>
-        Dengan mengirim formulir ini, Anda menyatakan telah membaca dan menyetujui ketentuan pemesanan berikut:
+        Dengan mengirim formulir ini, Saya menyatakan telah membaca dan menyetujui ketentuan pemesanan berikut:
       </p>
 
       <div

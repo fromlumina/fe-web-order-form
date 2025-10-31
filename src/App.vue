@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
-import BookingForm from "./components/BookingForm.vue";
+import {onMounted, reactive, ref} from "vue";
 import ConsentForm from "./components/ConsentForm.vue";
 import SubmittedView from "./components/SubmittedView.vue";
+import type {FormFields} from "./interfaces/form-builder.interface.ts";
+import FormBuilder from "./components/FormBuilder.vue";
 
 onMounted(() => {
   setTimeout(() => window.HSStaticMethods.autoInit(), 100)
@@ -10,6 +11,179 @@ onMounted(() => {
 
 const page = ref<number>(1)
 const submitted = ref<boolean>(false)
+
+const formFields: FormFields = [
+  {
+    title: "Data Pribadi",
+    children: [
+      {
+        label: "Nama lengkap",
+        items: [
+          {
+            field: 'name',
+            type: 'text',
+            variant: "text",
+            placeholder: "Nama lengkap",
+            required: {
+              message: "Nama harus diisi"
+            },
+            maxLength: {
+              value: 100,
+              message: "Maksimal 100 karakter"
+            },
+          }
+        ]
+      },
+      {
+        label: "Email",
+        items: [
+          {
+            field: 'email',
+            type: 'text',
+            variant: "email",
+            placeholder: "example@mail.com",
+            required: {
+              message: "Email harus diisi"
+            },
+          }
+        ]
+      },
+      {
+        label: "No WhatsApp",
+        items: [
+          {
+            field: 'phoneNumber',
+            type: 'text',
+            variant: "phone",
+            placeholder: "+62 xxxx xxxx xxxx",
+            required: {
+              message: "No WhatsApp harus diisi",
+            },
+          }
+        ]
+      },
+      {
+        label: "Media Sosial",
+        items: [
+          {
+            field: 'instagram',
+            type: 'text',
+            variant: "text",
+            placeholder: "Instagram",
+          },
+          {
+            field: 'tiktok',
+            type: 'text',
+            variant: "text",
+            placeholder: "TikTok",
+          }
+        ]
+      },
+      {
+        label: "Institusi",
+        items: [
+          {
+            field: 'institution',
+            type: 'text',
+            variant: "text",
+            placeholder: "Institusi, perusahaan, organisasi (Kosongkan jika personal)",
+          }
+        ]
+      },
+    ]
+  },
+  {
+    title: "Detail Booking",
+    children: [
+      {
+        label: "Tanggal & Waktu",
+        items: [
+          {
+            field: 'date',
+            type: 'date',
+            variant: "range",
+            format: "DD MMMM YYYY",
+            placeholder: "Tanggal sesi foto",
+            required: {
+              message: "Tanggal harus diisi",
+            },
+          },
+          {
+            field: 'time',
+            type: 'time',
+            variant: "24h",
+            placeholder: "Jam sesi foto",
+            required: {
+              message: "Jam sesi harus diisi",
+            },
+          }
+        ]
+      },
+      {
+        label: "Lokasi",
+        items: [
+          {
+            field: 'location',
+            type: 'text',
+            variant: "text",
+            placeholder: "Lokasi sesi foto",
+            required: {
+              message: "Lokasi harus diisi",
+            },
+          }
+        ]
+      }
+    ]
+  },
+  {
+    title: "Paket & Pembayaran",
+    children: [
+      {
+        label: "Paket",
+        items: [
+          {
+            field: 'package',
+            type: 'text',
+            variant: "text",
+            placeholder: "Pilih paket foto",
+            required: {
+              message: "Pilih salah satu paket"
+            },
+          }
+        ]
+      },
+      {
+        label: "Durasi",
+        items: [
+          {
+            field: 'duration',
+            type: 'text',
+            variant: "number",
+            placeholder: "Durasi sesi foto",
+            required: {
+              message: "Durasi harus diisi"
+            },
+          }
+        ]
+      },
+      {
+        label: "Bukti Pembayaran",
+        items: [
+          {
+            field: 'paymentProof',
+            type: 'text',
+            variant: "text",
+            placeholder: "Unggah bukti pembayaran",
+            required: {
+              message: "Bukti pembayaran harus diisi"
+            },
+          }
+        ]
+      }
+    ]
+  }
+]
+const formData = reactive<any>({})
 </script>
 
 <template>
@@ -26,27 +200,28 @@ const submitted = ref<boolean>(false)
           Setiap momen bahagia pantas diabadikan
         </p>
       </div>
-      <form>
-        <booking-form v-if="page === 1"/>
+      <div>
+        <form-builder v-if="page === 1" :group-fields="formFields" v-model="formData" @submit="page=2">
+          <button type="submit"
+                  class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+            Lanjutkan
+          </button>
+        </form-builder>
         <consent-form v-if="page === 2"/>
-        <button v-if="page === 1" type="button"
-                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                @click="page = 2">
-          Lanjutkan
-        </button>
+
         <div v-if="page === 2" class="flex gap-4">
           <button type="button"
                   class="flex-1 justify-center py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-500 hover:border-blue-600 hover:text-blue-600 focus:outline-hidden focus:border-blue-600 focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-700 dark:text-neutral-400 dark:hover:text-blue-500 dark:hover:border-blue-600 dark:focus:text-blue-500 dark:focus:border-blue-600"
-          @click="page = 1">
+                  @click="page = 1">
             Kembali
           </button>
           <button type="button"
                   class="flex-1 justify-center py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-          @click="submitted = true">
-            Submit
+                  @click="submitted = true">
+            Kirim
           </button>
         </div>
-      </form>
+      </div>
 
     </div>
     <!-- End Card -->
